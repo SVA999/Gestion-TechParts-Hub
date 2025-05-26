@@ -10,43 +10,6 @@ public class Main {
 
             Inventario inventario = new Inventario();
 
-            /*
-        System.out.println("Inventario original:");
-        inventario.mostrarInventario();
-
-        System.out.println("\nOrdenado por nombre:");
-        inventario.ordenarPorNombre();
-        inventario.mostrarInventario();
-
-        System.out.println("\nBuscar por nombre:");
-        ParteHardware resultado = inventario.buscarPorNombre("CPU Ryzen 5");
-        if (resultado != null) {
-            resultado.mostrarInfo();
-        } else {
-            System.out.println("Producto no encontrado.");
-        }
-
-        // ✅ Actualización de stock con registro en la lista enlazada
-        System.out.println("\nActualizando stock de 'CPU Ryzen 5'...");
-        boolean actualizado = inventario.actualizarStock("C456", 12);
-        if (actualizado) {
-            System.out.println("Stock actualizado correctamente.");
-
-            // 🔽 Mostrar la parte con stock actualizado
-            ParteHardware actualizadoParte = inventario.buscarPorCodigo("C456");
-            if (actualizadoParte != null) {
-                actualizadoParte.mostrarInfo();
-            }
-            
-        } else {
-            System.out.println("No se pudo actualizar el stock.");
-        }
-
-        // ✅ Mostrar historial de cambios registrados en lista enlazada
-        System.out.println("\nHistorial de cambios en el inventario:");
-        inventario.mostrarHistorialCambios();
-        
-             */
             byte opcion, opcionBuscar, opcionOrdenar;
 
             // Cargar datos
@@ -145,14 +108,32 @@ public class Main {
                     case 6:
                         //Selecciona los k productos con menor cantidad en stock
                         JOptionPane.showMessageDialog(null,
-                            inventario.seleccionarKMenorStock(Integer.parseInt(
-                                JOptionPane.showInputDialog(null, "Ingresa cantidad a consultar"))
-                        ));
+                                inventario.seleccionarKMenorStock(Integer.parseInt(
+                                        JOptionPane.showInputDialog(null, "Ingresa cantidad a consultar"))
+                                ));
                         break;
                     case 7:
                         //Selecciona mostrar Historial de Cambios
                         JOptionPane.showMessageDialog(null,
-                            inventario.mostrarHistorialCambios());
+                                inventario.mostrarHistorialCambios());
+                        break;
+                    case 8:
+                        // Registrar pedido
+                        JOptionPane.showMessageDialog(null,
+                                inventario.agregarPedido(
+                                        JOptionPane.showInputDialog(null, "Código del producto").toUpperCase(),
+                                        Integer.parseInt(JOptionPane.showInputDialog(null, "Cantidad solicitada"))
+                                ));
+                        break;
+
+                    case 9:
+                        // Procesar siguiente pedido
+                        JOptionPane.showMessageDialog(null, inventario.procesarSiguientePedido());
+                        break;
+
+                    case 10:
+                        // Mostrar pedidos pendientes
+                        JOptionPane.showMessageDialog(null, inventario.mostrarPedidosPendientes());
                         break;
                     case 0:
                         JOptionPane.showMessageDialog(null, "\tSaliendo del programa...", "SALIDA", 0);
@@ -185,6 +166,11 @@ public class Main {
                             <p style="color:#344667">5. Buscar</p>
                             <p style="color:#344667">6. Selecciona los productos con menor cantidad en stock</p>
                             <p style="color:#344667">7. Mostrar Historial de Cambios</p>
+
+                        <h3 style="color:#5a7ab4">--- Pedidos ---</h3>
+                            <p style="color:#344667">8. Registrar Pedido</p>
+                            <p style="color:#344667">9. Procesar Siguiente Pedido</p>
+                            <p style="color:#344667">10. Mostrar Pedidos Pendientes</p>
 
                         <h3 style="color:#5a7ab4">------------------</h3>
                             <p style="color:#b45274">0. Salir</p>

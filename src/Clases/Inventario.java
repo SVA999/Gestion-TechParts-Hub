@@ -9,10 +9,12 @@ public class Inventario {
 
     ArrayList<ParteHardware> listaPartes;
     ListaHistorial historial;  // Lista enlazada personalizada para cambios
+    ListaPedidos colaPedidos;
 
     public Inventario() {
         listaPartes = new ArrayList<>();
         historial = new ListaHistorial();
+        colaPedidos = new ListaPedidos();
     }
 
     public String CargarDatos() throws Exception {
@@ -272,6 +274,44 @@ public class Inventario {
     public String mostrarHistorialCambios() {
 
         return historial.mostrarHistorial();
+    }
+
+    public String agregarPedido(String codigoProducto, int cantidad) {
+        ParteHardware parte = buscarPorCodigo(codigoProducto, true);
+        if (parte == null) {
+            return "No existe producto con ese código.";
+        }
+        String fecha = java.time.LocalDate.now().toString();
+        Pedido nuevo = new Pedido(codigoProducto, cantidad, fecha);
+        colaPedidos.agregarPedido(nuevo);
+        return "Pedido agregado correctamente.";
+    }
+
+    public String procesarSiguientePedido() {
+        if (colaPedidos.estaVacia()) {
+            return "No hay pedidos pendientes.";
+        }
+
+        Pedido pedido = colaPedidos.verSiguientePedido(); // Solo miramos, no quitamos aún
+        ParteHardware parte = buscarPorCodigo(pedido.codigoProducto, true);
+
+        if (parte == null) {
+            return "Producto no encontrado: " + pedido.codigoProducto;
+        }
+
+        if (parte.cantidad >= pedido.cantidadSolicitada) {
+            parte.cantidad -= pedido.cantidadSolicitada;
+            colaPedidos.eliminarSiguientePedido(); // Ahora sí lo quitamos
+            String fecha = java.time.LocalDate.now().toString();
+            historial.insertarCambio(new CambioStock(pedido.codigoProducto, "Despacho por pedido", parte.cantidad, fecha));
+            return "Pedido procesado exitosamente:\n" + pedido.mostrar();
+        } else {
+            return "Stock insuficiente para procesar el pedido:\n" + pedido.mostrar(); // NO lo eliminamos
+        }
+    }
+
+    public String mostrarPedidosPendientes() {
+        return colaPedidos.mostrarPedidosPendientes();
     }
 
 }
