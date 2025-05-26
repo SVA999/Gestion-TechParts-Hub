@@ -1,3 +1,5 @@
+package Clases;
+
 public class ParteHardware {
 
     String nombre;
@@ -19,9 +21,8 @@ public class ParteHardware {
         this.categoria = categoria;
     }
 
-    public void mostrarInfo() {
-        System.out.println("Nombre: " + nombre + ", Código: " + codigo_producto + ", Precio: $" + precio
-                + ", Cantidad: " + cantidad + ", Categoría: " + categoria);
+    public String mostrarInfo() {
+        return "\nNombre: " + nombre + ", Código: " + codigo_producto + ", Precio: $" + precio + ", Cantidad: " + cantidad + ", Categoría: " + categoria;
     }
 
     public String getNombre() {

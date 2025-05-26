@@ -1,0 +1,31 @@
+Adaptador HDMI a VGA,A741,Conversor de video,UGREEN,12.0,20,Accesorio
+Hub USB 3.0,U369,Concentrador de puertos USB,ORICO,18.0,12,Accesorio
+Tarjeta de Sonido,A357,Audio envolvente 7.1,Creative,70.0,3,Audio
+Memoria USB 64GB,U852,Unidad Flash,SanDisk,20.0,20,Almacenamiento
+Disco Externo 2TB,D321,Unidad de almacenamiento externa,WD,95.0,8,Almacenamiento
+CPU Ryzen 5,C456,Procesador AMD,AMD,200.0,5,CPU
+CPU Intel i7 12700K,C832,Procesador Intel de 12va Gen,Intel,310.0,4,CPU
+CPU Intel i9 13700K,C833,Procesador Intel de 13va Gen,Intel,560.0,4,CPU
+SSD 1TB,D789,Disco Sólido,Samsung,120.0,8,Disco
+HDD 2TB,H654,Disco Duro Mecánico,Seagate,70.0,9,Disco
+GPU RTX 3060,G321,Tarjeta Gráfica Nvidia,Nvidia,400.0,3,GPU
+GPU RX 6700 XT,G654,Tarjeta Gráfica AMD Radeon,AMD,420.0,3,GPU
+Gabinete ATX,B123,Gabinete para PC,NZXT,85.0,6,Gabinete
+Monitor 24",T456,Monitor FHD,LG,130.0,5,Periférico
+Teclado Mecánico,K789,Teclado para gaming,Logitech,60.0,10,Periférico
+Mouse Inalámbrico,M987,Mouse óptico inalámbrico,HP,25.0,15,Periférico
+Cámara Web,C741,Cámara HD para videollamadas,Logitech,40.0,6,Periférico
+RAM 16GB,R123,Memoria RAM DDR4,Corsair,80.0,10,Memoria
+RAM 32GB,R874,Memoria RAM DDR5 5600MHz,Kingston,160.0,6,Memoria
+Placa Madre B550,M456,Placa base para Ryzen,MSI,150.0,6,Motherboard
+Placa Madre Z690,M789,Placa base para Intel,ASUS,220.0,5,Motherboard
+Fuente 650W,F789,Fuente de poder 80+ Gold,EVGA,90.0,4,Fuente
+Fuente 750W Modular,F963,Fuente de poder modular,Corsair,130.0,4,Fuente
+Cooler CPU,C987,Disipador Térmico,Cooler Master,45.0,7,Refrigeración
+Cooler Líquido 240mm,C412,Refrigeración líquida AIO,NZXT,120.0,3,Refrigeración
+Ventilador RGB,V963,Ventilador con iluminación,Thermaltake,15.0,14,Refrigeración
+Panel RGB 120mm,V874,Panel LED con ventilador,Thermaltake,25.0,10,Refrigeración
+Tarjeta WiFi,W321,Adaptador de red,TP-Link,35.0,12,Red
+Switch 8 Puertos,S654,Switch de red,D-Link,50.0,4,Red
+Router WiFi 6,R159,Router de alta velocidad,Asus,110.0,5,Red
+Tarjeta Captura Video,C369,Capturadora HDMI para streaming,Elgato,150.0,2,Video

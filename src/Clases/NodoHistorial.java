@@ -1,6 +1,8 @@
+package Clases;
+
 public class NodoHistorial {
-    CambioStock cambio;
-    NodoHistorial siguiente;
+    public CambioStock cambio;
+    public NodoHistorial siguiente;
 
     public NodoHistorial(CambioStock cambio) {
         this.cambio = cambio;

@@ -1,3 +1,5 @@
+package Clases;
+
 public class ListaHistorial {
     private NodoHistorial cabeza; // Inicio de la lista
 
@@ -12,17 +14,20 @@ public class ListaHistorial {
         cabeza = nuevo;
     }
 
-    // Muestra todos los cambios
-    public void mostrarHistorial() {
+    // Retorna todos los cambios en formato String
+    public String mostrarHistorial() {
         if (cabeza == null) {
-            System.out.println("No hay historial de cambios.");
-            return;
+            return "No hay historial de cambios.";
         }
 
+        StringBuilder historialStr = new StringBuilder();
         NodoHistorial actual = cabeza;
+
         while (actual != null) {
-            actual.cambio.mostrar();
+            historialStr.append(actual.cambio.mostrar()).append("\n");
             actual = actual.siguiente;
         }
+
+        return historialStr.toString();
     }
 }
