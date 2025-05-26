@@ -1,0 +1,9 @@
+public class NodoHistorial {
+    CambioStock cambio;
+    NodoHistorial siguiente;
+
+    public NodoHistorial(CambioStock cambio) {
+        this.cambio = cambio;
+        this.siguiente = null;
+    }
+}

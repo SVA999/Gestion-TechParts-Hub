@@ -1,0 +1,190 @@
+import java.util.ArrayList;
+
+public class Inventario {
+    ArrayList<ParteHardware> listaPartes;
+    ListaHistorial historial;  // Lista enlazada personalizada para cambios
+
+
+    public Inventario() {
+        listaPartes = new ArrayList<>();
+        historial = new ListaHistorial();
+    }
+
+    // Agrega una parte al inventario
+    public void registrarParte(ParteHardware parte) {
+        listaPartes.add(parte);
+    }
+
+    // Muestra todo el inventario
+    public void mostrarInventario() {
+        for (ParteHardware parte : listaPartes) {
+            parte.mostrarInfo();
+        }
+    }
+
+    // Búsqueda por nombre
+    public ParteHardware buscarPorNombre(String nombre) {
+        for (ParteHardware parte : listaPartes) {
+            if (parte.nombre.equalsIgnoreCase(nombre)) {
+                return parte;
+            }
+        }
+        return null;
+    }
+
+    // Búsqueda por código
+    public ParteHardware buscarPorCodigo(String codigo) {
+        for (ParteHardware parte : listaPartes) {
+            if (parte.codigo_producto.equalsIgnoreCase(codigo)) {
+                return parte;
+            }
+        }
+        return null;
+    }
+
+    // Búsqueda por categoría
+    public ArrayList<ParteHardware> buscarPorCategoria(String categoria) {
+        ArrayList<ParteHardware> resultado = new ArrayList<>();
+        for (ParteHardware parte : listaPartes) {
+            if (parte.categoria.equalsIgnoreCase(categoria)) {
+                resultado.add(parte);
+            }
+        }
+        return resultado;
+    }
+
+    // Búsqueda por rango de precio
+    public ArrayList<ParteHardware> buscarPorRangoPrecio(double min, double max) {
+        ArrayList<ParteHardware> resultado = new ArrayList<>();
+        for (ParteHardware parte : listaPartes) {
+            if (parte.precio >= min && parte.precio <= max) {
+                resultado.add(parte);
+            }
+        }
+        return resultado;
+    }
+
+    // Actualiza la cantidad en stock de una parte por código
+    public boolean actualizarStock(String codigo, int nuevaCantidad) {
+    ParteHardware parte = buscarPorCodigo(codigo);
+    if (parte != null) {
+        parte.cantidad = nuevaCantidad;
+
+        // Crear un registro de cambio e insertarlo en la lista enlazada
+        String fecha = java.time.LocalDate.now().toString();
+        CambioStock cambio = new CambioStock(codigo, "Actualización de stock", nuevaCantidad, fecha);
+        historial.insertarCambio(cambio);
+
+        return true;
+    }
+    return false;
+}
+
+    // Ordena por nombre usando QuickSort
+    public void ordenarPorNombre() {
+        quickSort(0, listaPartes.size() - 1);
+    }
+
+    private void quickSort(int inicio, int fin) {
+        if (inicio < fin) {
+            int indicePivote = particion(inicio, fin);
+            quickSort(inicio, indicePivote - 1);
+            quickSort(indicePivote + 1, fin);
+        }
+    }
+
+    private int particion(int inicio, int fin) {
+        ParteHardware pivote = listaPartes.get(fin);
+        int i = inicio - 1;
+        for (int j = inicio; j < fin; j++) {
+            if (listaPartes.get(j).nombre.compareToIgnoreCase(pivote.nombre) < 0) {
+                i++;
+                ParteHardware temp = listaPartes.get(i);
+                listaPartes.set(i, listaPartes.get(j));
+                listaPartes.set(j, temp);
+            }
+        }
+        ParteHardware temp = listaPartes.get(i + 1);
+        listaPartes.set(i + 1, listaPartes.get(fin));
+        listaPartes.set(fin, temp);
+        return i + 1;
+    }
+
+    // Ordena por precio usando QuickSort
+    public void ordenarPorPrecio() {
+        quickSortPrecio(0, listaPartes.size() - 1);
+    }
+
+    private void quickSortPrecio(int inicio, int fin) {
+        if (inicio < fin) {
+            int indicePivote = particionPrecio(inicio, fin);
+            quickSortPrecio(inicio, indicePivote - 1);
+            quickSortPrecio(indicePivote + 1, fin);
+        }
+    }
+
+    private int particionPrecio(int inicio, int fin) {
+        ParteHardware pivote = listaPartes.get(fin);
+        int i = inicio - 1;
+        for (int j = inicio; j < fin; j++) {
+            if (listaPartes.get(j).precio < pivote.precio) {
+                i++;
+                ParteHardware temp = listaPartes.get(i);
+                listaPartes.set(i, listaPartes.get(j));
+                listaPartes.set(j, temp);
+            }
+        }
+        ParteHardware temp = listaPartes.get(i + 1);
+        listaPartes.set(i + 1, listaPartes.get(fin));
+        listaPartes.set(fin, temp);
+        return i + 1;
+    }
+
+    // Ordena por cantidad en stock usando QuickSort
+    public void ordenarPorCantidad() {
+        quickSortCantidad(0, listaPartes.size() - 1);
+    }
+
+    private void quickSortCantidad(int inicio, int fin) {
+        if (inicio < fin) {
+            int indicePivote = particionCantidad(inicio, fin);
+            quickSortCantidad(inicio, indicePivote - 1);
+            quickSortCantidad(indicePivote + 1, fin);
+        }
+    }
+
+    private int particionCantidad(int inicio, int fin) {
+        ParteHardware pivote = listaPartes.get(fin);
+        int i = inicio - 1;
+        for (int j = inicio; j < fin; j++) {
+            if (listaPartes.get(j).cantidad < pivote.cantidad) {
+                i++;
+                ParteHardware temp = listaPartes.get(i);
+                listaPartes.set(i, listaPartes.get(j));
+                listaPartes.set(j, temp);
+            }
+        }
+        ParteHardware temp = listaPartes.get(i + 1);
+        listaPartes.set(i + 1, listaPartes.get(fin));
+        listaPartes.set(fin, temp);
+        return i + 1;
+    }
+
+    // Selecciona los k productos con menor cantidad en stock
+    public ArrayList<ParteHardware> seleccionarKMenorStock(int k) {
+        ordenarPorCantidad(); // Primero ordenamos por cantidad ascendente
+        ArrayList<ParteHardware> resultado = new ArrayList<>();
+        for (int i = 0; i < k && i < listaPartes.size(); i++) {
+            resultado.add(listaPartes.get(i));
+        }
+        return resultado;
+    }
+
+    // Muestra el historial de cambios en el stock
+    public void mostrarHistorialCambios() {
+        
+        historial.mostrarHistorial();
+    }
+
+
+}
