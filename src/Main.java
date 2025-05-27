@@ -22,13 +22,13 @@ public class Main {
                     case 1:
                         // Insertar -Registrar Parte
                         inventario.registrarParte(new ParteHardware(
-                                JOptionPane.showInputDialog(null, "Ingresa el nombre del componente").toUpperCase(),
-                                JOptionPane.showInputDialog(null, "Ingresa el Codigo de Producto").toUpperCase(),
-                                JOptionPane.showInputDialog(null, "Ingresa una Descripcion").toUpperCase(),
-                                JOptionPane.showInputDialog(null, "Ingresa el Fabricante").toUpperCase(),
-                                Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el Precio")),
-                                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa la cantidad de Stock")),
-                                JOptionPane.showInputDialog(null, "Ingresa la Categoria").toUpperCase()
+                                leerTexto("Ingresa el nombre del componente"),
+                                leerTexto("Ingresa el Codigo de Producto"),
+                                leerTexto("Ingresa una Descripcion"),
+                                leerTexto("Ingresa el Fabricante"),
+                                leerDouble("Ingresa el Precio"),
+                                leerEntero("Ingresa la cantidad de Stock"),
+                                leerTexto("Ingresa la Categoria")
                         ));
 
                         JOptionPane.showMessageDialog(null, "Parte registrada exitosamente.");
@@ -45,37 +45,39 @@ public class Main {
                             switch (opcionBuscar) {
                                 case 0 ->
                                     AbrirMenu();
-                                case 1 -> // Nombre
+                                case 1 -> // Buscar por Nombre
                                     JOptionPane.showMessageDialog(null,
                                             inventario.buscarPorNombre(
-                                                    JOptionPane.showInputDialog(null, "Nombre del producto").toUpperCase()
+                                                    leerTexto("Nombre del producto")
                                             ));
-                                case 2 -> // Codigo
+                                case 2 -> // Buscar por Código
                                     JOptionPane.showMessageDialog(null,
                                             inventario.buscarPorCodigo(
-                                                    JOptionPane.showInputDialog(null, "Codigo del producto").toUpperCase()
+                                                    leerTexto("Código del producto")
                                             ));
-                                case 3 -> // Categoria
+                                case 3 -> // Buscar por Categoría
                                     JOptionPane.showMessageDialog(null,
                                             inventario.buscarPorCategoria(
-                                                    JOptionPane.showInputDialog(null, "Categoria del producto").toUpperCase()
+                                                    leerTexto("Categoría del producto")
                                             ));
-                                case 4 ->
+                                case 4 -> // Buscar por Rango de Precio
                                     JOptionPane.showMessageDialog(null,
                                             inventario.buscarPorRangoPrecio(
-                                                    Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el Precio Minimo")),
-                                                    Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el Precio Maximo"))
+                                                    leerDouble("Ingresa el Precio Mínimo"),
+                                                    leerDouble("Ingresa el Precio Máximo")
                                             ));
                                 default ->
-                                    JOptionPane.showMessageDialog(null, "\tOpción inválida.");
+                                    JOptionPane.showMessageDialog(null, "\tOpción inválida, vuelve a intentar");
                             }
                         } while (opcionBuscar != 0);
                         break;
+
                     case 3:
                         // Actualizar Stock
                         JOptionPane.showMessageDialog(null, inventario.actualizarStock(
-                                JOptionPane.showInputDialog(null, "Ingresa el Codigo de producto").toUpperCase(),
-                                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa la nueva cantidad"))));
+                                leerTexto("Ingresa el Código de producto"),
+                                leerEntero("Ingresa la nueva cantidad")
+                        ));
                         break;
                     case 4:
                         // Ordenar
@@ -101,15 +103,15 @@ public class Main {
                                     JOptionPane.showMessageDialog(null, inventario.mostrarInventario());
                                 }
                                 default ->
-                                    JOptionPane.showMessageDialog(null, "\tOpción inválida.");
+                                    JOptionPane.showMessageDialog(null, "\tOpción inválida, vuelve a intentar");
                             }
                         } while (opcionOrdenar != 0);
                         break;
                     case 6:
-                        //Selecciona los k productos con menor cantidad en stock
+                        // Selecciona los k productos con menor cantidad en stock
                         JOptionPane.showMessageDialog(null,
-                                inventario.seleccionarKMenorStock(Integer.parseInt(
-                                        JOptionPane.showInputDialog(null, "Ingresa cantidad a consultar"))
+                                inventario.seleccionarKMenorStock(
+                                        leerEntero("Ingresa la cantidad a consultar")
                                 ));
                         break;
                     case 7:
@@ -121,11 +123,10 @@ public class Main {
                         // Registrar pedido
                         JOptionPane.showMessageDialog(null,
                                 inventario.agregarPedido(
-                                        JOptionPane.showInputDialog(null, "Código del producto").toUpperCase(),
-                                        Integer.parseInt(JOptionPane.showInputDialog(null, "Cantidad solicitada"))
+                                        leerTexto("Código del producto").toUpperCase(),
+                                        leerEntero("Cantidad solicitada")
                                 ));
                         break;
-
                     case 9:
                         // Procesar siguiente pedido
                         JOptionPane.showMessageDialog(null, inventario.procesarSiguientePedido());
@@ -139,7 +140,7 @@ public class Main {
                         JOptionPane.showMessageDialog(null, "\tSaliendo del programa...", "SALIDA", 0);
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, "\tOpción inválida.");
+                        JOptionPane.showMessageDialog(null, "\tOpción inválida, vuelve a intentar");
                 }
             } while (opcion != 0);
 
@@ -151,40 +152,45 @@ public class Main {
     // --------------------- METODOS ----------------------//
     public static byte AbrirMenu() throws Exception {
         try {
-
             String sOpcion = JOptionPane.showInputDialog(null, """
-                                        <html>
-                        <h2 style="color:#678bce">Menú:</h2>
+                                    <html>
+                <h2 style="color:#678bce">Menú:</h2>
 
-                        <h3 style="color:#5a7ab4">--- Operaciones ---</h3>
-                            <p style="color:#344667">1. Registrar Parte</p>
-                            <p style="color:#344667">2. Mostrar Inventario</p>
-                            <p style="color:#344667">3. Actualizar Stock</p>
-                            <p style="color:#344667">4. Ordenar</p>
+                <h3 style="color:#5a7ab4">--- Operaciones ---</h3>
+                    <p style="color:#344667">1. Registrar Parte</p>
+                    <p style="color:#344667">2. Mostrar Inventario</p>
+                    <p style="color:#344667">3. Actualizar Stock</p>
+                    <p style="color:#344667">4. Ordenar</p>
 
-                        <h3 style="color:#5a7ab4">--- Consultas ---</h3>
-                            <p style="color:#344667">5. Buscar</p>
-                            <p style="color:#344667">6. Selecciona los productos con menor cantidad en stock</p>
-                            <p style="color:#344667">7. Mostrar Historial de Cambios</p>
+                <h3 style="color:#5a7ab4">--- Consultas ---</h3>
+                    <p style="color:#344667">5. Buscar</p>
+                    <p style="color:#344667">6. Selecciona los productos con menor cantidad en stock</p>
+                    <p style="color:#344667">7. Mostrar Historial de Cambios</p>
 
-                        <h3 style="color:#5a7ab4">--- Pedidos ---</h3>
-                            <p style="color:#344667">8. Registrar Pedido</p>
-                            <p style="color:#344667">9. Procesar Siguiente Pedido</p>
-                            <p style="color:#344667">10. Mostrar Pedidos Pendientes</p>
+                <h3 style="color:#5a7ab4">--- Pedidos ---</h3>
+                    <p style="color:#344667">8. Registrar Pedido</p>
+                    <p style="color:#344667">9. Procesar Siguiente Pedido</p>
+                    <p style="color:#344667">10. Mostrar Pedidos Pendientes</p>
 
-                        <h3 style="color:#5a7ab4">------------------</h3>
-                            <p style="color:#b45274">0. Salir</p>
-                    </html>
-                                        """, "MENU", 1);
+                <h3 style="color:#5a7ab4">------------------</h3>
+                    <p style="color:#b45274">0. Salir</p>
+            </html>
+                                    """, "MENU", 1);
 
             if (sOpcion == null) {
                 return 0;
-            } else if (sOpcion.isBlank() || sOpcion.isEmpty()) {
+            } else if (sOpcion.isBlank()) {
+                JOptionPane.showMessageDialog(null, "Error: No se ingresó ninguna opción.");
                 return -1;
-            } else {
-                return Byte.parseByte(sOpcion);
             }
 
+            int opcion = Integer.parseInt(sOpcion);
+
+            return (byte) opcion;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Debes ingresar un número entero.");
+            return -1;
         } catch (Exception e) {
             throw new Exception("Error al AbrirMenu:\n" + e);
         }
@@ -211,11 +217,15 @@ public class Main {
             if (sOpcion == null) {
                 return 0;
             } else if (sOpcion.isBlank() || sOpcion.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error: No se ingresó ninguna opción.");
                 return -1;
             } else {
                 return Byte.parseByte(sOpcion);
             }
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Debes ingresar un número entero.");
+            return -1;
         } catch (Exception e) {
             throw new Exception("Error al AbrirMenuBuscar:\n" + e);
         }
@@ -241,13 +251,68 @@ public class Main {
             if (sOpcion == null) {
                 return 0;
             } else if (sOpcion.isBlank() || sOpcion.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error: No se ingresó ninguna opción.");
                 return -1;
             } else {
                 return Byte.parseByte(sOpcion);
             }
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Debes ingresar un número entero.");
+            return -1;
         } catch (Exception e) {
             throw new Exception("Error al AbrirMenuOrdenar:\n" + e);
+        }
+    }
+
+    //-------------Comprobaciones
+    public static int leerEntero(String mensaje) {
+        while (true) {
+            try {
+                String input = JOptionPane.showInputDialog(null, mensaje);
+                if (input == null) {
+                    throw new RuntimeException("Operación cancelada.");
+                }
+                input = input.trim();
+                if (input.isEmpty()) {
+                    throw new NumberFormatException();
+                }
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Ingresa un número entero válido.");
+            }
+        }
+    }
+
+    public static double leerDouble(String mensaje) {
+        while (true) {
+            try {
+                String input = JOptionPane.showInputDialog(null, mensaje);
+                if (input == null) {
+                    throw new RuntimeException("Operación cancelada.");
+                }
+                input = input.trim();
+                if (input.isEmpty()) {
+                    throw new NumberFormatException();
+                }
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Ingresa un número decimal válido.");
+            }
+        }
+    }
+
+    public static String leerTexto(String mensaje) {
+        while (true) {
+            String input = JOptionPane.showInputDialog(null, mensaje);
+            if (input == null) {
+                throw new RuntimeException("Operación cancelada.");
+            }
+            input = input.trim();
+            if (!input.isEmpty()) {
+                return input.toUpperCase();
+            }
+            JOptionPane.showMessageDialog(null, "Error: Ingresa un texto válido.");
         }
     }
 
